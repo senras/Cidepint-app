@@ -1,0 +1,115 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends "layout.html" %}
+
+{% block title %}Gestión de solicitudes{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div>
+    <div class="d-flex mb-3 justify-content-between">
+        <h2>Gestión de solicitudes</h2>
+        <a href="{{ url_for('solicitudes.crear_solicitud') }}"><button class="btn btn-success" style="margin-bottom: 10px;">Crear solicitud</button></a>
+      </div>
+        <form method="POST" action="">
+                <div class="d-flex mb-3">
+                  <div class="d-flex justify-content-around align-items-center w-50">
+                      {{ render_text_field(form.tipo_servicio) }}
+                      {{ render_text_field(form.status) }}
+                      {{ render_text_field(form.cliente) }}
+                  </div>
+                  <div class="d-flex justify-content-around align-items-center w-50">
+                    <div class="w-25">{{ render_text_field(form.fecha_inicio) }}</div>
+                    <div class="w-25">{{ render_text_field(form.fecha_fin) }}</div>
+                      <button class="btn btn-secondary" type="submit"> Filtrar</button>
+                  </div>
+                </div>
+        </form>
+    </div>
+    <table class="table">
+      <thead>
+        <tr class="table-secondary">
+          <th scope="cole">Usuario</th>
+          <th scope="cole">Servicio</th>
+          <th scope="cole">Tipo de servicio</th>
+          <th scope="cole">Estado de solicitud</th>
+          <th scope="cole">Fecha inicio</th>
+          <th scope="cole">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for solicitud in solicitudes.items %}
+          <tr>
+            <td>{{ solicitud.user.last_name }} {{ solicitud.user.first_name }}</td>
+            <td>{{ solicitud.servicio.nombre }}</td>
+            <td>{{ solicitud.servicio.tipo_servicio }}</td>
+            <td>{{ solicitud.status }} <br><i class="text-muted date">(último cambio: {{ parse_date(solicitud.updated_at) }})</i></td>
+            <td>{{parse_date(solicitud.inserted_at) }}</td>
+            
+            <td>
+              <a href="{{ url_for('solicitudes.editar_solicitud', id=solicitud.id) }}"><button class="btn btn-secondary"><i class="bi bi-pen"></i></button></a>
+              {% if not is_operador(session) %}
+                <button class="btn btn-danger delete-button" data-item-id="{{ solicitud.id }}"><i class="bi bi-trash "></i></button>
+              {% endif %}
+              <a href="{{ url_for('solicitudes.cargar_nota', id=solicitud.id) }}"><button class="btn btn-success">Agregar nota <i class="bi bi-plus-square-dotted"></i></button></a>
+              <a href="{{ url_for('solicitudes.mostrar_solicitud', id=solicitud.id) }}"><button class="btn btn-primary">Detalle <i class="bi bi-journal-text"></i></button></a>
+              
+              
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <div class="center">
+      {% for page_num in solicitudes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+              {% if page_num == solicitudes.page %}
+                  <a class="indice-btn btn btn-secondary" href="{{ url_for('solicitudes.index', page=page_num) }}">{{ page_num }}</a>
+              {% else %}
+                  <a class="indice-btn btn btn-outline-secondary" href="{{ url_for('solicitudes.index', page=page_num) }}">{{ page_num }}</a>
+              {% endif %}
+          {% else %}
+          ...
+          {% endif %}
+      {% endfor %}
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      const deleteButtons = document.querySelectorAll('.delete-button'); 
+      deleteButtons.forEach(button => {
+          button.addEventListener('click', function() {
+              const itemId = button.dataset.itemId;  
+              Swal.fire({
+                  title: 'Estás seguro?',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  reverseButtons: true,
+                  confirmButtonText: 'Sí!',
+                  cancelButtonText: 'No, cancelar',
+              }).then((result) => {
+                  if (result.value) {
+                      fetch(`/solicitudes/${itemId}/eliminar`, {
+                      method: 'POST'
+                      })
+                      Swal.fire('Borrado!', 'La solicitud ha sido eliminada.', 'success').then((result) => {
+                          location.reload();
+                        });
+                  } else if (!result.value) {
+                      Swal.fire('Cancelado', '', 'info');
+                  }
+              });
+          });
+      });
+  });
+</script>
+{% endblock %}

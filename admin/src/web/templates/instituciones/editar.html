@@ -1,0 +1,31 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends "layout.html" %}
+
+{% block title %}Editar institución {% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+        <h1>Editar institución</h1>
+        <form method="POST" action="{{ url_for('instituciones.editar_institucion', id=id) }}" novalidate>
+            {{ render_text_field(form.nombre) }}
+            {{ render_text_field(form.infoInstitucion) }}
+            {{ render_text_field(form.direccion) }}
+            {{ render_text_field(form.latitud) }}
+            {{ render_text_field(form.longitud) }}
+            {{ render_text_field(form.web) }}
+            {{ render_text_field(form.palabrasClaves) }}
+            {{ render_text_field(form.diasHorarios) }}
+            {{ render_text_field(form.infoContacto) }}
+            <button class="btn btn-success" type="submit">Guardar</button>
+        </form>
+</div>
+{% endblock %}

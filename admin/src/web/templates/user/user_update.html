@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+{% block title %}Registro{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h1>Registro de Contraseña:</h1>
+    <form method="POST">
+        <label for="user_name">Nombre de usuario:</label>
+        <input type="text" name="user_name" id="user_name" required>
+        <label for="password">Contraseña:</label>
+        <input type="password" name="password" id="password" required>
+        <input class="mt-2" type="submit" value="Registrar">
+    </form>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+<footer>
+    &copy; 2023 Mi página web
+</footer>
+{% endblock %}

@@ -1,0 +1,74 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: #272626;
+}
+
+#app {
+	min-height: 100vh;
+}
+
+nav {
+	padding: 1.25rem;
+	text-align: center;
+	box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+nav a {
+	color: #272626;
+	padding: 0.5rem 1rem;
+	text-decoration: none;
+	font-size: 1.25rem;
+}
+
+.google-btn {
+	text-decoration: none;
+}
+
+nav a:hover {
+	color: #4687cd;
+}
+
+nav a.router-link-exact-active {
+	background: #eeeded;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+}
+
+footer {
+	box-shadow: 0 0 2px 3px rgba(0, 0, 0, 0.2);
+	background: #2980b9; /* fallback for old browsers */
+	background: -webkit-linear-gradient(
+		to right,
+		#ffffff,
+		#6dd5fa,
+		#2980b9
+	); /* Chrome 10-25, Safari 5.1-6 */
+	background: #3a7bd5; /* fallback for old browsers */
+	background: -webkit-linear-gradient(to left, #3a6073, #3a7bd5); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		to left,
+		#5e95cd,
+		#3a7bd5
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */ /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+	color: #fff;
+	text-align: center;
+	padding: 1.35rem;
+}
+
+form .input-group {
+	width: 20%;
+}
+
+#main-content {
+	min-height: 70vh;
+}
+
+#btn-blue {
+	background-color: #568fce;
+	color: #fff;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+}

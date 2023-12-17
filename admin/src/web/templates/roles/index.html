@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de roles</title>
+</head>
+<body>
+    <h1>Lista de roles</h1>
+    <a href="{{ url_for('roles.crear_rol') }}"><button>Crear rol</button></a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Acciones</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for rol in roles %}
+            <tr>
+                <td>{{ rol.nombre }}</td>
+                <td>
+                    <a href="{{ url_for('roles.editar_rol', id=rol.id) }}"><button>Editar</button></a>  
+                    <a href="{{ url_for('roles.eliminar_rol', id=rol.id) }}"><button>Eliminar</button></a>  
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

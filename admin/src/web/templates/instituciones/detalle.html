@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}Lista de instituciones{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+{% block content %}
+    <div class="container contenido-paginado">
+        <h2>{{ institucion.nombre }} </h2>       
+        <table class="table">
+            <thead>
+                <tr class="table-secondary">
+                    <th scope="col">Información</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Sitio web</th>
+                    <th scope="col">Días y horarios</th>
+                    <th scope="col">Contacto</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ institucion.infoInstitucion }}</td>
+                    <td>{{ institucion.direccion }}</td>
+                    <td><a href="{{ institucion.web }}">{{ institucion.web }}</a></td>
+                    <td>{{ institucion.diasHorarios }}</td>
+                    <td>{{ institucion.infoContacto }}</td>                   
+                </tr>
+            </tbody>
+        </table>
+        <br>
+    </div>
+{% endblock %}

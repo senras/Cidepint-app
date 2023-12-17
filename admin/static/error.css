@@ -1,0 +1,19 @@
+/* Estilos para el cuerpo de la página de error */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    text-align: center;
+    padding: 50px;
+}
+
+/* Estilos para el encabezado h1 */
+h1 {
+    color: #333;
+    font-size: 36px;
+}
+
+/* Estilos para el párrafo de descripción */
+p {
+    color: #666;
+    font-size: 18px;
+}

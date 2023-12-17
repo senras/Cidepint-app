@@ -1,0 +1,28 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends 'layout.html' %}
+
+{% block title %}Crear servicio {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Crear servicio</h1>
+    <form method="post" novalidate>
+      {{ render_text_field(form.nombre) }}
+      {{ render_text_field(form.descripcion) }}
+      {{ render_text_field(form.palabras_claves_busqueda) }}
+      {{ render_text_field(form.listado_centros_habilitados) }}
+      <div class="mt-1">
+        {{ render_text_field(form.tipo_servicio) }}
+      </div>
+      <input class="mt-3" type="submit" value="Crear servicio">
+    </form>
+  </div>
+{% endblock %}
+

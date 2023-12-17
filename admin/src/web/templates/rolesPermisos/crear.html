@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Asignar un permiso a un rol</title>
+</head>
+<body>
+    <h1>Asignar un permiso a un rol</h1>
+    <form method="POST" action="{{ url_for('rolesPermisos.crear_rolPermiso') }}">
+        
+    
+        <label for="rol_id">Selecciona un rol:</label>
+        <select name="rol_id">
+            <option value="" selected>Selecciona un rol</option>
+            {% for rol in roles %}
+                <option value="{{ rol.id }}">{{ rol.nombre }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="permiso_id">Selecciona un permiso:</label>
+        <select name="permiso_id">
+            <option value="" selected>Selecciona un permiso</option>
+            {% for permiso in permisos %}
+                <option value="{{ permiso.id }}">{{ permiso.nombre }}</option>
+            {% endfor %}
+        </select>
+    
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de permisos</title>
+</head>
+<body>
+    <h1>Lista de permisos</h1>
+    <a href="{{ url_for('permisos.crear_permiso') }}"><button>Crear permiso</button></a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Acciones</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for permiso in permisos %}
+            <tr>
+                <td>{{ permiso.nombre }}</td>
+                <td>
+                    <a href="{{ url_for('permisos.editar_permiso', id=permiso.id) }}"><button>Editar</button></a>  
+                    <a href="{{ url_for('permisos.eliminar_permiso', id=permiso.id) }}"><button>Eliminar</button></a>  
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

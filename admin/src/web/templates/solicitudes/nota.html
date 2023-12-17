@@ -1,0 +1,22 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends "layout.html" %}
+
+{% block title %}Cargar nota{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Agregar comentarios</h2>
+  <form method="post">
+    {{ render_text_field(form.comentario) }}
+    <input class="mt-2" type="submit" value="Guardar cambios">
+  </form>
+</div>
+{% endblock %}

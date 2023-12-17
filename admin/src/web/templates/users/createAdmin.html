@@ -1,0 +1,26 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends "layout.html" %}
+
+{% block title %}Crear usuario {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+<div class="container">
+        <h2>Nuevo usuario</h2>
+        <form method="POST" action="{{ url_for('users.crear_usuario') }}" novalidate>
+            {{ render_text_field(form.first_name) }}
+            {{ render_text_field(form.last_name) }}   
+            {{ render_text_field(form.user_name) }}
+            {{ render_text_field(form.email) }}
+            {{ render_text_field(form.password) }}
+            <button class="btn btn-success" type="submit">Guardar cambios</button>
+        </form>
+</div>
+{% endblock %}
+

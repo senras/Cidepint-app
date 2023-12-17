@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block title %}Crear rol para usuario en una institucion{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+{% if error != '' %}
+    <div class="alert alert-danger text-center" role="alert">
+        {{ error }}
+    </div>
+{% endif %}
+<div class="container">
+    <h1>Crear rol para un usuario en la institución {{institucion.nombre}}</h1>
+    <form method="POST" action="{{ url_for('usuariosInstitucion.crear_rol_institucion') }}">
+        
+    
+        <label for="user_id">Selecciona un usuario:</label>
+        <select  class="form-select" aria-label="Default select example" name="user_id">
+            <option value="" selected>Selecciona un usuario</option>
+            {% for user in users %}
+                <option value="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</option>
+            {% endfor %}
+        </select>
+        {% if 'user_id' in form.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.errors['user_id'] %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    
+        <label for="rol_id">Selecciona un rol:</label>
+        <select  class="form-select" aria-label="Default select example" name="rol_id">
+            <option value="" selected>Selecciona un rol</option>
+            {% for rol in roles %}
+                <option value="{{ rol.id }}">{{ rol.nombre }}</option>
+            {% endfor %}
+        </select>
+        {% if 'rol_id' in form.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.errors['rol_id'] %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </form>
+</div>
+{% endblock %}

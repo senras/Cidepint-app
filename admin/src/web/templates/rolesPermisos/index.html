@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de roles y sus permisos</title>
+</head>
+<body>
+    <h1>Lista de roles y sus permisos</h1>
+    <a href="{{ url_for('rolesPermisos.crear_rolPermiso') }}"><button>Crear permiso a un rol</button></a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Rol</th>
+                <th>Permiso</th>
+                
+                <th>Acciones</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for rolPermiso in rolesPermisos %}
+            <tr>
+                <td>{{ rolPermiso.rol.nombre}}</td>
+                <td>{{ rolPermiso.permiso.nombre}}</td>
+                <td>
+                    <a href="{{ url_for('rolesPermisos.editar_rolPermiso', id=rolPermiso.id) }}"><button>Editar</button></a>  
+                    <a href="{{ url_for('rolesPermisos.eliminar_rolPermiso', id=rolPermiso.id) }}"><button>Eliminar</button></a>  
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

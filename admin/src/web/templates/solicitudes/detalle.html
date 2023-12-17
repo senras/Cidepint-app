@@ -1,0 +1,40 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends "layout.html" %}
+
+{% block title %}Gestión de solicitudes{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="d-flex flex-column mt-1 col">
+          <div class="h3">Detalle del pedido</div>
+          <div class="my-1"><b>Cliente:</b> {{ solicitud.user.last_name }} {{ solicitud.user.first_name }}.</div>
+          <div><b>Servicio:</b> {{ solicitud.servicio.nombre }}.</div>
+          <div class="my-1"><b>Tipo de servicio:</b> {{ solicitud.servicio.tipo_servicio }}.</div>
+          <div><b>Fecha de inicio:</b> {{ parse_date_with_hour(solicitud.inserted_at) }}.</div>
+          <div class="my-1"><b>Estado de solicitud</b> {{ solicitud.status }}.</div>
+          <div><b>Último cambio de estado:</b> {{ parse_date_with_hour(solicitud.status_at) }}.</div>
+          <div class="my-1"><b>Observaciones</b><span class="text-muted date">(cambio de estado)</span>: {{ solicitud.observaciones }}.</div>
+      </div>
+      <div class="col notas mx-3 rounded border border-light">
+        {% if solicitud.notas %}
+        <div class="mt-2 ml-1"><b>Notas:</b></div>
+        {% for nota in solicitud.notas %}
+          <div class="div rounded border border-dark my-2 p-1 bg-warning">
+            <div class="text-muted date"><b>{{ nota.autor.last_name }} {{ nota.autor.first_name }} ({{ parse_date_with_hour(nota.inserted_at) }}):</b></div>
+            <div class="ml-2">"<b>{{ nota.comentario }}</b>" </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+      </div>
+  </div>
+</div>
+{% endblock %}

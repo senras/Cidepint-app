@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block title %}Crear institución{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Crear institución</h1>
+    <form method="POST" action="{{ url_for('instituciones.crear_institucion') }}" novalidate>
+        <label for="nombre">Nombre:</label>
+        {{ form.nombre(placeholder="nombre") }}
+        {% for error in form.nombre.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>
+        <label for="direccion">Dirección:</label>
+        {{ form.direccion(placeholder="direccion") }}
+        {% for error in form.direccion.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>
+        <label for="infoInstitucion">Informacion:</label>
+        {{ form.infoInstitucion(placeholder="infoInstitucion") }}
+        {% for error in form.infoInstitucion.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>
+        <label for="latitud">Latitud:</label>
+        {{ form.latitud(placeholder="Latitud") }}
+        {% for error in form.latitud.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>
+        <label for="longitud">Longitud:</label>
+        {{ form.longitud(placeholder="Longitud") }}
+        {% for error in form.longitud.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>
+        <label for="web">Web:</label>
+        {{ form.web(placeholder="web") }}
+        {% for error in form.web.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>
+        <label for="palabrasClaves">Palabras Claves:</label>
+        {{ form.palabrasClaves(placeholder="palabrasClaves") }}
+        {% for error in form.palabrasClaves.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>
+        <label for="diasHorarios">Dias y Horarios:</label>
+        {{ form.diasHorarios(placeholder="diasHorarios") }}
+        {% for error in form.diasHorarios.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>
+        <label for="infoContacto">Informacion de Contacto:</label>
+        {{ form.infoContacto(placeholder="infoContacto") }}
+        {% for error in form.infoContacto.errors %}
+            <p>{{ error }}</p>
+        {% endfor %}
+        <br>    
+        <button class="btn btn-success" type="submit">Aceptar</button>
+    </form>
+</div>
+{% endblock %}

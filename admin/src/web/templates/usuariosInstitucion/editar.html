@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Editar asignación de rol en una institución especifica a un usuario{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+{% if error != '' %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+{% endif %}
+<div class="container">
+    <h2>{{institucion.nombre}} </h2>
+    <h5 class="my-2">Cambiar rol del usuario/a {{user.first_name}} {{user.last_name}}</h5>
+    <form method="POST" action="{{ url_for('usuariosInstitucion.editar_rol_institucion', id=id) }}">
+        
+
+        <label for="rol_id">Selecciona un rol:</label>
+        <select  class="form-select" aria-label="Default select example"  name="rol_id">
+            <option value="" selected>Selecciona un rol</option>
+            {% for rol in roles %}
+                <option value="{{ rol.id }}">
+                    {{ rol.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+        {% if 'rol_id' in form.errors %}
+            <div class="alert alert-danger">
+                {% for error in form.errors['rol_id'] %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <button class="btn btn-success mt-3" type="submit">Guardar Cambios</button>
+    </form>
+</div>
+{% endblock %}

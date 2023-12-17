@@ -1,0 +1,87 @@
+{% extends "layout.html" %}
+{% block title %}Lista de usuarios con rol de dueño/a{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+{% block content %}
+    <div class="container contenido-paginado">
+        <h1>Lista de usuarios con rol de dueño/a</h1>
+        <a href="{{ url_for('usersRoles.crear_userRol') }}"><button class="btn btn-success" style="margin-bottom: 10px;">Agregar dueño</button></a>
+        
+        <table class="table">
+            <thead>
+                <tr class="table-secondary">
+                    <th scope="col">Nombre de usuario</th>
+                    <th scope="col">Institucion</th>
+                    <th scope="col">Rol</th>
+                    
+                    <th scope="col">Acciones</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+            {% for userRol in usersRoles %}
+                <tr>
+                    <td>{{ userRol.user.first_name }} {{ userRol.user.last_name }}</td>
+                    <td>{{ userRol.instituciones.nombre }}</td>
+                    <td>{{ userRol.rol.nombre}}</td>
+                    <td>
+                        <a href="{{ url_for('usersRoles.editar_userRol', id=userRol.id) }}"><button class="btn btn-secondary"><i class="bi bi-pen"></i></button></a>  
+                        <button class="btn btn-danger delete-button" data-item-id="{{ userRol.id }}"><i class="bi bi-trash "></i></button>
+
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <div class="center">
+            {% for page_num in usersRoles.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if page_num == usersRoles.page %}
+                        <a class="indice-btn btn btn-secondary" href="{{ url_for('usersRoles.listar_usersRoles', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="indice-btn btn btn-outline-secondary" href="{{ url_for('usersRoles.listar_usersRoles', page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                ...
+                {% endif %}
+            {% endfor %}
+        </div>
+        
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-button'); 
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemId = button.dataset.itemId;  
+                    Swal.fire({
+                        title: 'Estás seguro?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        reverseButtons: true,
+                        confirmButtonText: 'Sí!',
+                        cancelButtonText: 'No, cancelar',
+                    }).then((result) => {
+                        if (result.value) {
+                            fetch(`/usersRoles/${itemId}/eliminar`, {
+                            method: 'POST'
+                            })
+                            Swal.fire('Borrado!', 'Se ha quitado el rol.', 'success').then((result) => {
+                                location.reload();
+                              });
+                        } else if (!result.value) {
+                            Swal.fire('Cancelado', '', 'info');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

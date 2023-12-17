@@ -1,0 +1,107 @@
+{% extends "layout.html" %}
+
+{% block title %}Gestión de servicios{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+
+{% block content %}
+  <div class="container contenido-paginado">
+    <div>
+      <h2>Lista de servicios</h2>
+      <a href="{{ url_for('servicios.create_service') }}"><button class="btn btn-success" style="margin-bottom: 10px;">Crear servicio</button></a>
+    </div>
+    <table class="table">
+      <thead>
+        <tr class="table-secondary">
+          <th scope="col">Nombre</th>
+          <th scope="col">Descripción</th>
+          <th scope="col">Palabras clave de búsqueda</th>
+          <th scope="col">Centros habilitados</th>
+          <th scope="col">Tipo de servicio</th>
+          <th scope="col">Habilitado</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for servicio in servicios.items %}
+          <tr>
+            <td>{{ servicio.nombre }}</td>
+            <td>{{ servicio.descripcion }}</td>
+            <td>{{ servicio.palabras_claves_busqueda }}</td>
+            <td>{{ servicio.listado_centros_habilitados }}</td>
+            <td>{{ servicio.tipo_servicio }}</td>
+            <td>
+              {% if servicio.habilitado == True %}
+              <div class="btn btn-success">
+                <i style="font-size: 20px;" class="bi bi-check-circle"> Habilitado</i>
+              </div>
+              {% else %}
+              <div class="btn btn-danger">
+                <i style="font-size: 20px;" class="bi bi-x-circle"> Deshabilitado</i>
+              </div>
+              {% endif %}
+            </td>
+            <td>
+              <a href="{{ url_for('servicios.editar_servicio', id=servicio.id) }}"><button class="btn btn-secondary"><i class="bi bi-pen"></i></button></a>
+              {% if not is_operador(session) %}
+                <button class="btn btn-danger delete-button" data-item-id="{{ servicio.id }}"><i class="bi bi-trash"></i></button>  
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <br>
+    <div class="center">
+      {% for page_num in servicios.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if page_num %}
+              {% if page_num == servicios.page %}
+                  <a class="indice-btn btn btn-secondary" href="{{ url_for('servicios.index', page=page_num) }}">{{ page_num }}</a>
+              {% else %}
+                  <a class="indice-btn btn btn-outline-secondary" href="{{ url_for('servicios.index', page=page_num) }}">{{ page_num }}</a>
+              {% endif %}
+          {% else %}
+          ...
+          {% endif %}
+      {% endfor %}
+  </div>
+</div>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtons = document.querySelectorAll('.delete-button'); 
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const itemId = button.dataset.itemId;  
+                Swal.fire({
+                    title: 'Estás seguro?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    reverseButtons: true,
+                    confirmButtonText: 'Sí!',
+                    cancelButtonText: 'No, cancelar',
+                }).then((result) => {
+                    if (result.value) {
+                        fetch(`/servicios/${itemId}/eliminar`, {
+                        method: 'POST'
+                        })
+                        Swal.fire('Borrado!', 'El servicio ha sido borrado.', 'success').then((result) => {
+                            location.reload();
+                          });
+                    } else if (!result.value) {
+                        Swal.fire('Cancelado', '', 'info');
+                    }
+                });
+            });
+        });
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "layout.html" %}
+{% block title %}Lista de usuarios por institucion{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+{% block content %}
+    <div class="container contenido-paginado">
+        <div class="d-flex justify-content-between">
+            <h2>Lista de usuarios de {{institucion.nombre}}</h2>
+            <a href="{{ url_for('instituciones.editar_institucion', id=institucion.id) }}"><button class="btn"><i class="fa-lg bi bi-gear-fill"></i></button></a>
+        </div>
+        <a href="{{ url_for('usuariosInstitucion.crear_rol_institucion') }}"><button class="my-3 btn btn-success" style="margin-bottom: 10px;">Agregar usuario</button></a>
+        
+        <table class="table">
+            <thead>
+                <tr class="table-secondary">
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Rol</th>
+                    <th scope="col">Institucion</th>
+                    <th scope="col">Acciones</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+            {% for usuario in usuariosInstitucion.items %}
+                {% if usuario.rol.nombre != 'owner' %}               
+                    <tr>
+                        <td>{{ usuario.user.first_name }}</td>
+                        <td>{{ usuario.user.last_name  }}</td>
+                        <td>{{ usuario.user.email}}</td>
+                        <td>{{ usuario.rol.nombre}}</td>
+                        <td>{{ usuario.instituciones.nombre}}</td>
+                        <td>
+                            <a href="{{ url_for('usuariosInstitucion.editar_rol_institucion', id=usuario.id) }}"><button class="btn btn-secondary"><i class="bi bi-pen"></i></button></a>  
+                            <button class="btn btn-danger delete-button" data-item-id="{{ usuario.id }}"><i class="bi bi-trash "></i></button>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <div class="center">
+            {% for page_num in usuariosInstitucion.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if page_num == usuariosInstitucion.page %}
+                        <a class="indice-btn btn btn-secondary" href="{{ url_for('usuariosInstitucion.listar_usuariosInstitucion', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="indice-btn btn btn-outline-secondary" href="{{ url_for('usuariosInstitucion.listar_usuariosInstitucion', page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                ...
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const deleteButtons = document.querySelectorAll('.delete-button'); 
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const itemId = button.dataset.itemId;  
+                    Swal.fire({
+                        title: 'Estás seguro?',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        reverseButtons: true,
+                        confirmButtonText: 'Sí!',
+                        cancelButtonText: 'No, cancelar',
+                    }).then((result) => {
+                        if (result.value) {
+                            fetch(`/usuariosInstitucion/eliminar/${itemId}`, {
+                            method: 'POST'
+                            })
+                            Swal.fire('Borrado!', 'El usuario ha sido borrado.', 'success').then((result) => {
+                                location.reload();
+                              });
+                        } else if (!result.value) {
+                            Swal.fire('Cancelado', '', 'info');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}

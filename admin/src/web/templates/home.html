@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block title %}Home page {% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+<div class="container centrado-home">
+        <h1>Bienvenido a CIDEPINT</h1>
+        <img style="width:500px" src="{{url_for('static', filename='images/cidepint-logo.png')}}"/>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% with messages = get_flashed_messages(with_categories=true) %}
+    <div class="text-center">
+        {% if messages %}
+        {% for category, message in messages %}
+        <script>
+            Swal.fire({
+                title:"",
+                // success , error , warning ,info
+                
+                text: "{{ message }}",
+                // Custom message flashed from your flask routes
+                icon: "{{ category }}" == "danger" ? "error" : "{{ category }}"
+                // success , error , warning ,info
+            })
+        </script>
+        {% endfor %}
+        {% endif %}
+    </div>
+{% endwith %}

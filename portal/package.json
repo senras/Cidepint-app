@@ -1,0 +1,45 @@
+{
+  "name": "portal",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "bootstrap": "^5.3.2",
+    "bootstrap-vue": "^2.23.1",
+    "jsonwebtoken": "^9.0.2",
+    "jwt-decode": "^4.0.0",
+    "chart.js": "^4.4.0",
+    "leaflet": "^1.9.4",
+    "bootstrap-vue-next": "^0.15.4",
+    "vue": "^3.3.8",
+    "vue-axios": "^3.5.2",
+    "vue-oauth": "0.0.1",
+    "vue-router": "^4.0.3",
+    "vue-chartjs": "^5.2.0",
+    "vue3-leaflet": "^1.0.48",
+    "vuex": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.5",
+    "@babel/polyfill": "^7.7.0",
+    "@vue/cli-plugin-router": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "sass-loader": "^13.3.2",
+    "bootstrap": "^4.3.1",
+    "mutationobserver-shim": "^0.3.3",
+    "popper.js": "^1.16.0",
+    "portal-vue": "^2.1.6",
+    "sass": "^1.19.0",
+    "vue-cli-plugin-bootstrap": "~0.4.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ]
+}

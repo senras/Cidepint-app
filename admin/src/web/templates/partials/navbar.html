@@ -1,0 +1,44 @@
+<nav>
+    <a href="{{ url_for('home.home') }}">Inicio</a>
+    <!-- Links para usuarios autenticados -->
+    {% if is_authenticated(session) %}
+        <!-- Links de superadmin -->
+        {% if is_super_admin(session) %}
+            <a href="{{ url_for('users.index') }}">Usuarios</a>
+            <a href="{{ url_for('config.index') }}">Configuración</a>
+            <a href="{{ url_for('instituciones.listar_instituciones') }}">Instituciones</a>
+            <a href="{{ url_for('usersRoles.listar_usersRoles') }}">Dueños</a>
+        {% endif %}
+        {% if not is_super_admin(session) %}
+            {% if (not rol_pendiente(session)) and ((get_instituciones_by_user_id_without_blocked(session) | length) != 0) %}
+                <a href="{{ url_for('servicios.index') }}">Servicios</a>
+                <a href="{{ url_for('solicitudes.index') }}">Solicitudes de servicios</a>
+                {% if is_owner(session) %}
+                    <a href="{{ url_for('usuariosInstitucion.listar_usuariosInstitucion') }}">Gestionar institución</a>
+                {% endif %}
+                <div class="dropdown">
+                    <button class="dropbtn">{{get_institucion_actual(session)}}</button>
+                    <div class="dropdown-content">
+                        {% for institucion in get_instituciones_by_user_id_without_blocked(session) %}
+                            <form method="POST" action="{{ url_for('usersRoles.seleccionarInstitucion') }}">
+                                <input type="hidden" name=institucion_id value={{institucion.id}}>
+                                <input type="submit" value="{{institucion.nombre}}">
+                            </form>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+        <!-- Dropdown para usuarios autenticados -->
+        <div class="dropdown">
+            <button class="dropbtn"><i class="fa-solid fa-user"></i></button>
+            <div class="dropdown-content">
+                <a href="{{ url_for('users.ver_perfil') }}">Ver perfil</a>
+                <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+            </div>
+        </div>
+    {% else %}
+        <a href="{{ url_for('auth.login') }}">Iniciar sesión</a>
+        <a href="{{ url_for('registration.registration') }}">Registrarse</a>
+    {% endif %}
+</nav>

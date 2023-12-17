@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Editar rol</title>
+    </head>
+    <body>
+        <h1>Editar rol</h1>
+        <form method="POST" action="{{ url_for('roles.editar_rol', id=id) }}">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" value="{{ form.nombre.data }}" required>
+            <br>
+            
+            
+            <button type="submit">Editar</button>
+        </form>
+
+</html>

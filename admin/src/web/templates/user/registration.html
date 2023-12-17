@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}Registro{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Registro de Usuario</h1>
+    <form method="POST">
+        <label for="first_name">Nombre:</label>
+        <input type="text" name="first_name" id="first_name" required>
+        <label for="last_name">Apellido:</label>
+        <input type="text" name="last_name" id="last_name" required>
+        <label for="email">Correo electrónico:</label>
+        <input type="text" name="email" id="email" required>
+        <input class="mt-2" type="submit" value="Registrar">
+    </form>
+    <h5 class="mt-2">¡Luego de registrarte se enviará un correo de confirmación a la casilla de email que nos proporciones!</h5>
+</div>
+
+
+{% endblock %}

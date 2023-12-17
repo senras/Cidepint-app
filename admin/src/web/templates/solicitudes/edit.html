@@ -1,0 +1,23 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends "layout.html" %}
+
+{% block title %}Editar solicitud{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h2>Modificar estado de solicitud</h2>
+  <form method="post" novalidate>
+      {{ render_text_field(form.status) }}
+      {{ render_text_field(form.observaciones) }}
+      <button class="btn btn-success" type="submit">Guardar</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% from "macros/fields.html" import render_text_field %}
+{% extends "layout.html" %}
+
+{% block title %}Configuración{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block navbar %}
+{{ super() }}   
+
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <h2>Configuración del sistema:</h2>
+    <form method="POST" action="{{ url_for('config.index') }}">
+        {{ render_text_field(form.element_quantity) }}
+        {{ render_text_field(form.contact_email) }}
+        <div class="row">
+            <div class="col">
+                {{ render_text_field(form.contact_phone) }}
+            </div>
+            <div class="col">
+                {{ render_text_field(form.contact_address) }}
+            </div>
+        </div>
+        {{ render_text_field(form.manteinance_message) }}
+        <!-- {{ render_text_field(form.in_manteinance) }} -->
+        {% if form.in_manteinance.checked %}
+            <div class="form-check form-switch mt-3">
+                <label class="form-check-label" for="flexSwitchCheckDefault">En mantenimiento</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="flexSwitchCheckDefault" checked>
+            </div>
+        {% else %}
+            <div class="form-check form-switch mt-3">
+                <label class="form-check-label" for="flexSwitchCheckDefault">En mantenimiento</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="flexSwitchCheckDefault">
+            </div>
+        {% endif %}
+
+
+        <button class="btn btn-success" type="submit">Guardar</button>
+    </form>
+    
+</div>
+{% endblock %}
